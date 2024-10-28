@@ -253,8 +253,13 @@ def pretrain_actor(obs_dim, act_dim, hidden_dim, states, train_error, cls_weight
 
 def run_rlmc(use_weight=True, use_td=True, use_extra=True, use_pretrain=True, epsilon=0.3):
     (train_X, valid_X, test_X, train_y, valid_y, test_y, train_error, valid_error, _) = load_data()
-    valid_preds = np.load(f'{DATA_DIR}/bm_valid_preds.npy')
-    test_preds = np.load(f'{DATA_DIR}/bm_test_preds.npy')
+
+
+    # since the dataset given is a toy dataset (only 500 rows given, originally meant to have more number of rows)
+    valid_preds = np.load(f'{DATA_DIR}/bm_valid_preds.npy')[:500,:,:] 
+    test_preds = np.load(f'{DATA_DIR}/bm_test_preds.npy')[:500,:,:]
+
+
     train_X = np.swapaxes(train_X, 2, 1)
     valid_X = np.swapaxes(valid_X, 2, 1)
     test_X  = np.swapaxes(test_X,  2, 1)
